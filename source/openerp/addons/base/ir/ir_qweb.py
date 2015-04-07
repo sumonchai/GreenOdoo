@@ -1219,7 +1219,7 @@ class AssetsBundle(object):
         if page_number:
             return content
         if content is None:
-            css = self.css()
+            css = self.css().decode('utf-8')
             re_rules = '([^{]+\{(?:[^{}]|\{[^{}]*\})*\})'
             re_selectors = '()(?:\s*@media\s*[^{]*\{)?(?:\s*(?:[^,{]*(?:,|\{(?:[^}]*\}))))'
             css_url = '@import url(\'/web/css.%%d/%s/%s\');' % (self.xmlid, self.version)
@@ -1238,8 +1238,8 @@ class AssetsBundle(object):
             if len(pages) == 1:
                 pages = []
             for idx, page in enumerate(pages):
-                self.set_cache("css.%d" % (idx+1), u''.join(page))
-            content = u'\n'.join(css_url % i for i in range(1,len(pages)+1))
+                self.set_cache("css.%d" % (idx+1), ''.join(page))
+            content = '\n'.join(css_url % i for i in range(1,len(pages)+1))
             self.set_cache("css.0", content)
         if not content:
             return self.css()
